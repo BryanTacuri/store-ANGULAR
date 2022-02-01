@@ -1,0 +1,46 @@
+.card {
+  margin: 5px;
+  height: 200px;
+  width: 90%px;
+  max-width: 90%;
+}
+
+.alto {
+  height: 80px;
+  max-height: 100%;
+  word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .alto {
+    height: 60px;
+  }
+}
+
+.contentButton {
+  display: flex;
+  justify-content: center;
+}
+button {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.negrita {
+  font-weight: bold;
+  font-size: 19px;
+  padding: 12px;
+  text-align: center;
+  height: 60px;
+}
