@@ -1,47 +1,61 @@
-import { Injectable } from "@angular/core";
-import { Subject, Observable } from "rxjs";
-import { Product } from "src/app/pages/products/interface/product.interface";
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Product } from 'src/app/pages/products/interface/product.interface';
 
 @Injectable({
-    providedIn: "root"
+  providedIn: 'root'
 })
+export class ShoppingCartService {
+  products: Product[] = [];
 
-export class ShoppingCartService{
-    products: Product[] = [];
-    private cartSubject = new Subject<Product[]>();
-    private totalSubject = new Subject<number>();
-    private quantitySubject = new Subject<number>();
+  private cartSubject = new BehaviorSubject<Product[]>([]);
+  private totalSubject = new BehaviorSubject<number>(0);
+  private quantitySubject = new BehaviorSubject<number>(0);
 
-    get TotalAction$(): Observable<number>{
-        return this.totalSubject.asObservable();
+
+  get totalAction$(): Observable<number> {
+    return this.totalSubject.asObservable();
+  }
+  get quantityAction$(): Observable<number> {
+    return this.quantitySubject.asObservable();
+  }
+  get cartAction$(): Observable<Product[]> {
+    return this.cartSubject.asObservable();
+  }
+
+
+  updateCart(product: Product): void {
+    this.addToCart(product);
+    this.quantityProducts();
+    this.calcTotal();
+  }
+
+  resetCart(): void {
+    this.cartSubject.next([]);
+    this.totalSubject.next(0);
+    this.quantitySubject.next(0);
+    this.products = [];
+  }
+
+  private addToCart(product: Product): void {
+    const isProductInCart = this.products.find(({ id }) => id === product.id)
+
+    if (isProductInCart) {
+      isProductInCart.qty += 1;
+    } else {
+      this.products.push({ ...product, qty: 1 })
     }
 
-    get  quantityAction$(): Observable<number>{
-        return this.quantitySubject.asObservable();
-    }
+    this.cartSubject.next(this.products);
+  }
 
-    get cartAction$(): Observable<Product[]>{
-        return this.cartSubject.asObservable();
-    }
+  private quantityProducts(): void {
+    const quantity = this.products.reduce((acc, prod) => acc += prod.qty, 0);
+    this.quantitySubject.next(quantity);
+  }
 
-    updateCart(product: Product): void{
-        this.addToCard(product);
-        this.quantityProducts();
-        this.calcTotal();
-    }
-
-    private calcTotal(): void {
-        const total = this.products.reduce((acc, prod) => acc += prod.price, 0)
-        this.totalSubject.next(total);
-    }
-
-    private quantityProducts(): void{
-        const quantity = this.products.length;
-        this.quantitySubject.next(quantity)
-    }
-
-    private addToCard(product: Product): void{
-        this.products.push(product);
-        this.cartSubject.next(this.products)
-    }
+  private calcTotal(): void {
+    const total = this.products.reduce((acc, prod) => acc += (prod.price * prod.qty), 0);
+    this.totalSubject.next(total);
+  }
 }

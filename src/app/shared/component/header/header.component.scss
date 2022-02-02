@@ -1,3 +1,24 @@
-.spacer {
-  flex: 1 1 auto;
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  z-index: 1;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.shopping-cart {
+  align-items: center;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  display: flex;
+  padding: 0.1rem 0.5rem;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: rgb(4, 172, 194);
+  }
 }

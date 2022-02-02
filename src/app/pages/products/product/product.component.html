@@ -8,7 +8,8 @@
     </mat-card-content>
     <mat-card-actions>
         <div class="contentButton">
-            <button class="" mat-flat-button (click)="onClick()" color="primary">Añadir al carrito {{ product.price |
+            <button class="" mat-flat-button (click)="onClick()" [disabled]="product.stock === 0" color="primary">Añadir
+                al carrito {{ product.price |
                 currency}} <mat-icon>
                     add_shopping_cart</mat-icon></button>
         </div>

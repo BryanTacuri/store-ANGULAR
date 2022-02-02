@@ -9,11 +9,12 @@ import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.servi
     {{dataCart.total | currency}}
     ({{dataCart.quantity}})
     </ng-container>
+
   </ng-container>`
 })
 export class CartComponent {
 
   quantity$ = this.shoppingCartSvc.quantityAction$;
-  total$ = this.shoppingCartSvc.TotalAction$;
+  total$ = this.shoppingCartSvc.totalAction$;
   constructor(private shoppingCartSvc: ShoppingCartService) { }
 }

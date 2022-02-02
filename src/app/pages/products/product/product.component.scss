@@ -1,6 +1,6 @@
 .card {
   margin: 5px;
-  height: 200px;
+  height: 250px;
   width: 90%px;
   max-width: 90%;
 }
@@ -22,12 +22,8 @@
   justify-content: center;
 }
 button {
+  margin-top: 20px;
   width: 100%;
-}
-@media (min-width: 768px) {
-  button {
-    width: 100%;
-  }
 }
 
 @media (min-width: 768px) {
